@@ -1,9 +1,10 @@
 package com.scaler.thirdpartyapi.Services;
 
-import com.scaler.thirdpartyapi.Configs.ApplicationConfigurator;
 import com.scaler.thirdpartyapi.Models.Category;
 import com.scaler.thirdpartyapi.Models.Product;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -44,6 +45,50 @@ public class FakeStoreProductServiceImpl implements ProductService {
         }
 
         return productList;
+    }
+
+    @Override
+    public Product addProduct(FakeStoreResponseDTO fakeStoreProduct) {
+        FakeStoreResponseDTO responseDTO = restTemplate.postForObject(API_URL,
+                fakeStoreProduct, FakeStoreResponseDTO.class);
+        return convertFakeStoreProductToProduct(responseDTO);
+    }
+
+    //PATCH
+//    @Override
+//    public Product updateProduct(long productId, FakeStoreResponseDTO fakeStoreProduct) {
+//
+////        FakeStoreResponseDTO fakeStoreResponseDTO = restTemplate.patchForObject(API_URL +"/" + productId,
+////                fakeStoreProduct, FakeStoreResponseDTO.class);
+//
+//        HttpEntity<FakeStoreResponseDTO> requestEntity = new HttpEntity<>(fakeStoreProduct);
+//
+//        ResponseEntity<FakeStoreResponseDTO> responseDTO = restTemplate.exchange(API_URL + "/" + productId,
+//                HttpMethod.PATCH, requestEntity, FakeStoreResponseDTO.class);
+//
+//        return convertFakeStoreProductToProduct(responseDTO.getBody());
+//    }
+
+    //PUT
+    //Since put() api is having 'void' return type, we are using exchange() api which is a low-level api for CRUD operations using RestTemplate.
+    @Override
+    public Product replaceProduct(long productId, FakeStoreResponseDTO fakeStoreProduct) {
+
+        HttpEntity<FakeStoreResponseDTO> requestEntity = new HttpEntity<>(fakeStoreProduct);
+
+        ResponseEntity<FakeStoreResponseDTO> responseDTO = restTemplate.exchange(API_URL +"/" + productId,
+                HttpMethod.PUT, requestEntity, FakeStoreResponseDTO.class);
+
+        return convertFakeStoreProductToProduct(responseDTO.getBody());
+    }
+
+    @Override
+    public Product deleteProduct(long productId) {
+
+        ResponseEntity<FakeStoreResponseDTO> responseDTO = restTemplate.exchange(API_URL +"/" + productId,
+                HttpMethod.DELETE, null, FakeStoreResponseDTO.class);
+
+        return convertFakeStoreProductToProduct(responseDTO.getBody());
     }
 
     private Product convertFakeStoreProductToProduct(FakeStoreResponseDTO responseDTO) {
