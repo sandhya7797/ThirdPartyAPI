@@ -1,6 +1,7 @@
 package com.scaler.thirdpartyapi.Controllers;
 
 
+import com.scaler.thirdpartyapi.Exceptions.ProductNotExistsException;
 import com.scaler.thirdpartyapi.Models.Product;
 import com.scaler.thirdpartyapi.Services.FakeStoreResponseDTO;
 import com.scaler.thirdpartyapi.Services.ProductService;
@@ -19,7 +20,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable("id") long id) {
+    public Product getProduct(@PathVariable("id") long id) throws ProductNotExistsException {
         return productService.getProduct(id);
     }
 

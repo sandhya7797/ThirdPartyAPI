@@ -8,6 +8,12 @@ public class ThirdPartyApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ThirdPartyApiApplication.class, args);
+
+		/*
+		TODO List:
+		1. Patch API not working.
+		2. Finish Category API's from this page https://fakestoreapi.com/docs.
+		 */
 	}
 
 }

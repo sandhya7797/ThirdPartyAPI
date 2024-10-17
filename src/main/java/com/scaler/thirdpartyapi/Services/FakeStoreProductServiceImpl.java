@@ -1,5 +1,6 @@
 package com.scaler.thirdpartyapi.Services;
 
+import com.scaler.thirdpartyapi.Exceptions.ProductNotExistsException;
 import com.scaler.thirdpartyapi.Models.Category;
 import com.scaler.thirdpartyapi.Models.Product;
 import org.springframework.http.HttpEntity;
@@ -25,9 +26,15 @@ public class FakeStoreProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProduct(long id) {
+    public Product getProduct(long id) throws ProductNotExistsException {
+
+//        int a = 1/0; this exception also catched by controller advice.
+
         FakeStoreResponseDTO responseDTO = restTemplate.getForObject(API_URL + "/" + id,
                 FakeStoreResponseDTO.class);
+        if(responseDTO==null) {
+            throw new ProductNotExistsException("Product with " + id + " doesn't exists!");
+        }
         return convertFakeStoreProductToProduct(responseDTO);
     }
 
