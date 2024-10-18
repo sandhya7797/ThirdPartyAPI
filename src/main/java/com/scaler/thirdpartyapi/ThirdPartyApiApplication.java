@@ -11,7 +11,7 @@ public class ThirdPartyApiApplication {
 
 		/*
 		TODO List:
-		1. Patch API not working.
+		1. FAKE STORE Patch API is not working.
 		2. Finish Category API's from this page https://fakestoreapi.com/docs.
 		 */
 	}

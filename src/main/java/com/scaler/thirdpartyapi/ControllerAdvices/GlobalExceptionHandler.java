@@ -1,16 +1,17 @@
 package com.scaler.thirdpartyapi.ControllerAdvices;
 
+import com.scaler.thirdpartyapi.Exceptions.CategoryNotExistsException;
 import com.scaler.thirdpartyapi.Exceptions.ProductNotExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-//A controller advice allows to catch all exceptions through out the application from different controllers. Learn more about it.
-//Exception Handlers can be class level as well as global level. These will replace try-catch blocks in controllers.
+//A ControllerAdvice allows to catch all exceptions through out the application from different controllers. Learn more about it.
+//Exception Handlers can be at class level as well as at global level. These will replace try-catch blocks in controllers.
 
 @ControllerAdvice
-public class ExceptionHandlers {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(ArithmeticException.class)
     public ResponseEntity<ExceptionDTO> handleArithmeticException() {
@@ -26,6 +27,13 @@ public class ExceptionHandlers {
 
     @ExceptionHandler(ProductNotExistsException.class)
     public ResponseEntity<ExceptionDTO> handleProductNotExistsException(ProductNotExistsException ex) {
+        ExceptionDTO dto = new ExceptionDTO();
+        dto.setMessage(ex.getMessage());
+        return new ResponseEntity<>(dto,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CategoryNotExistsException.class)
+    public ResponseEntity<ExceptionDTO> handleException(CategoryNotExistsException ex) {
         ExceptionDTO dto = new ExceptionDTO();
         dto.setMessage(ex.getMessage());
         return new ResponseEntity<>(dto,HttpStatus.NOT_FOUND);
