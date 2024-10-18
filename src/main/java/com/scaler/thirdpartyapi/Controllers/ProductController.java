@@ -5,6 +5,7 @@ import com.scaler.thirdpartyapi.Exceptions.ProductNotExistsException;
 import com.scaler.thirdpartyapi.Models.Product;
 import com.scaler.thirdpartyapi.Services.FakeStoreResponseDTO;
 import com.scaler.thirdpartyapi.Services.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class ProductController {
 
     private ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(@Qualifier("productservice") ProductService productService) {
         this.productService = productService;
     }
 

@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("fakestoreproductservice")
 public class FakeStoreProductServiceImpl implements ProductService {
 
     // To call 3rd party api we have use either RestTemplate or WebClient and single bean is sufficient across application so we store it inside configs module.
