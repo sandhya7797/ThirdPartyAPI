@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service("productservice")
 public class ProductServiceImpl implements ProductService {
 
@@ -46,10 +47,11 @@ public class ProductServiceImpl implements ProductService {
         Optional<Category> categoryOptional = categoryRepository.findByName(product.getCategory().getName());
 
         if(categoryOptional.isEmpty()) {
-            throw new CategoryNotExistsException("Category not exists");
+//            Category savedCategory = categoryRepository.save(product.getCategory());
+//            product.setCategory(savedCategory); this code is replaced with cascade in product model
+        } else {
+            product.setCategory(categoryOptional.get());
         }
-
-        product.setCategory(categoryOptional.get());
 
         return productRepository.save(product);
     }
