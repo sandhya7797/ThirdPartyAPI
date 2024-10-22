@@ -3,6 +3,7 @@ package com.scaler.thirdpartyapi.Services;
 import com.scaler.thirdpartyapi.Exceptions.CategoryNotExistsException;
 import com.scaler.thirdpartyapi.Exceptions.ProductNotExistsException;
 import com.scaler.thirdpartyapi.Models.Product;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

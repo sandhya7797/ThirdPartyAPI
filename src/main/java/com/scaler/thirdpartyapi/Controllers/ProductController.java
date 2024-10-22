@@ -6,8 +6,11 @@ import com.scaler.thirdpartyapi.Exceptions.ProductNotExistsException;
 import com.scaler.thirdpartyapi.Models.Product;
 import com.scaler.thirdpartyapi.Services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,32 +24,43 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable("id") long id) throws ProductNotExistsException {
-        return productService.getProduct(id);
+    public ResponseEntity<Product> getProduct(@PathVariable("id") long id) throws ProductNotExistsException {
+        Product product = productService.getProduct(id);
+        return ResponseEntity.status(HttpStatus.OK).body(product);
     }
 
     @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<List<Product>> getAllProducts() {
+        List<Product> responseList =  productService.getAllProducts();
+
+//        for(Product product : responseList){
+//            product.setTitle("Hello " + product.getTitle());
+//        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseList);
     }
 
     @PostMapping
-    public Product addProduct(@RequestBody Product product) throws CategoryNotExistsException {
-        return productService.addProduct(product);
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) throws CategoryNotExistsException {
+         Product productInResponse = productService.addProduct(product);
+        return ResponseEntity.status(HttpStatus.OK).body(productInResponse);
     }
 
     @PutMapping("/{id}")
-    public Product replaceProduct(@PathVariable("id") long id, @RequestBody Product product) throws ProductNotExistsException, CategoryNotExistsException {
-        return productService.replaceProduct(id, product);
+    public ResponseEntity<Product> replaceProduct(@PathVariable("id") long id, @RequestBody Product product) throws ProductNotExistsException, CategoryNotExistsException {
+        Product productInResponse =  productService.replaceProduct(id, product);
+        return ResponseEntity.status(HttpStatus.OK).body(productInResponse);
     }
 
     @PatchMapping("/{id}")
-    public Product updateProduct(@PathVariable("id") long id, @RequestBody Product product) throws ProductNotExistsException {
-        return productService.updateProduct(id, product);
+    public ResponseEntity<Product> updateProduct(@PathVariable("id") long id, @RequestBody Product product) throws ProductNotExistsException {
+        Product productInResponse =  productService.updateProduct(id, product);
+        return ResponseEntity.status(HttpStatus.OK).body(productInResponse);
     }
 
     @DeleteMapping("/{id}")
-    public Product deleteProduct(@PathVariable("id") long id) throws ProductNotExistsException {
-        return productService.deleteProduct(id);
+    public ResponseEntity<Product> deleteProduct(@PathVariable("id") long id) throws ProductNotExistsException {
+        Product productInResponse = productService.deleteProduct(id);
+        return ResponseEntity.status(HttpStatus.OK).body(productInResponse);
     }
 }

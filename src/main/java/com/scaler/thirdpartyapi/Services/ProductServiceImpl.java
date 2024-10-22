@@ -6,12 +6,15 @@ import com.scaler.thirdpartyapi.Models.Category;
 import com.scaler.thirdpartyapi.Models.Product;
 import com.scaler.thirdpartyapi.Repositories.CategoryRepository;
 import com.scaler.thirdpartyapi.Repositories.ProductRepository;
+import org.springframework.context.annotation.Primary;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 
+@Primary
 @Service("productservice")
 public class ProductServiceImpl implements ProductService {
 
