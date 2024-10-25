@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-//A ControllerAdvice allows to catch all exceptions through out the application from different controllers. Learn more about it.
+//A ControllerAdvice allows to catch all exceptions through out the application from different controllers and using controllerAdvice methods we can modify the exception with custom info.
 //Exception Handlers can be at class level as well as at global level. These will replace try-catch blocks in controllers.
 
 @ControllerAdvice

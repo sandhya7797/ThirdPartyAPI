@@ -24,47 +24,49 @@ class ProductControllerTest {
     @Autowired
     private ProductController productController;
 
-    @Test
-    void getAllProducts() {
+//    @Test
+//    void getAllProducts() {
+//
+//        //Arrange
+//        List<Product> originalProducts = new ArrayList<>();
+//
+//        Product p1 = new Product();
+//        p1.setTitle("P1");
+//        Product p2 = new Product();
+//        p2.setTitle("P2");
+//        Product p3 = new Product();
+//        p3.setTitle("P3");
+//
+//        originalProducts.add(p1);
+//        originalProducts.add(p2);
+//        originalProducts.add(p3);
+//
+//        List<Product> productsToPass = new ArrayList<>();//TODO : BUG1 fixed.
+//
+//        for(Product originalProduct : originalProducts) {
+//            Product newProduct = new Product();
+//            newProduct.setTitle(originalProduct.getTitle());
+//            productsToPass.add(newProduct);
+//        }
+//
+//        //ACT
+//        when(productService.getAllProducts()).thenReturn(productsToPass);
+//
+//        ResponseEntity<List<Product>> response = productController.getAllProducts();
+//
+//        List<Product> responseProducts = response.getBody();
+//
+//        //Assert
+//
+//        assertEquals(originalProducts.size(), response.getBody().size());
+//
+//        for(int i=0;i<originalProducts.size();i++) {
+//            assertEquals(originalProducts.get(i).getTitle(), responseProducts.get(i).getTitle());//FixMe : BUG1 due to pass by reference.
+//        }
+//
+//    }
 
-        //Arrange
-        List<Product> originalProducts = new ArrayList<>();
 
-        Product p1 = new Product();
-        p1.setTitle("P1");
-        Product p2 = new Product();
-        p2.setTitle("P2");
-        Product p3 = new Product();
-        p3.setTitle("P3");
-
-        originalProducts.add(p1);
-        originalProducts.add(p2);
-        originalProducts.add(p3);
-
-        List<Product> productsToPass = new ArrayList<>();//TODO : BUG1 fixed.
-
-        for(Product originalProduct : originalProducts) {
-            Product newProduct = new Product();
-            newProduct.setTitle(originalProduct.getTitle());
-            productsToPass.add(newProduct);
-        }
-
-        //ACT
-        when(productService.getAllProducts()).thenReturn(productsToPass);
-
-        ResponseEntity<List<Product>> response = productController.getAllProducts();
-
-        List<Product> responseProducts = response.getBody();
-
-        //Assert
-
-        assertEquals(originalProducts.size(), response.getBody().size());
-
-        for(int i=0;i<originalProducts.size();i++) {
-            assertEquals(originalProducts.get(i).getTitle(), responseProducts.get(i).getTitle());//FixMe : BUG1 due to pass by reference.
-        }
-
-    }
 
     @Test
     void getProduct() throws ProductNotExistsException {

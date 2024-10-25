@@ -1,16 +1,17 @@
 package com.scaler.thirdpartyapi.Controllers;
 
 
+import com.scaler.thirdpartyapi.Commons.AuthenticationCommon;
 import com.scaler.thirdpartyapi.Exceptions.CategoryNotExistsException;
 import com.scaler.thirdpartyapi.Exceptions.ProductNotExistsException;
 import com.scaler.thirdpartyapi.Models.Product;
+import com.scaler.thirdpartyapi.DTOs.Role;
+import com.scaler.thirdpartyapi.DTOs.User;
 import com.scaler.thirdpartyapi.Services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,8 +20,11 @@ public class ProductController {
 
     private ProductService productService;
 
-    public ProductController(@Qualifier("productservice") ProductService productService) {
+    private AuthenticationCommon authenticationCommon;
+
+    public ProductController(@Qualifier("productservice") ProductService productService, AuthenticationCommon authenticationCommon) {
         this.productService = productService;
+        this.authenticationCommon = authenticationCommon;
     }
 
     @GetMapping("/{id}")
@@ -29,13 +33,37 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(product);
     }
 
+
+    //Lets assume product service received token from client and it will send token to user service for Authentication .
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
+    public ResponseEntity<List<Product>> getAllProducts(@RequestHeader("AuthenticationToken") String token) {
+
+        ResponseEntity<User> tokenValidationResponse = authenticationCommon.validateToken(token);
+
+        if(tokenValidationResponse.getBody()==null) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
+
+        boolean isAdmin = false;
+        for(Role role : tokenValidationResponse.getBody().getRoles()) {
+            if(role.getName().equals("ADMIN")) {
+                isAdmin = true;
+                break;
+            }
+        }
+
+        if(isAdmin) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+
         List<Product> responseList =  productService.getAllProducts();
 
 //        for(Product product : responseList){
 //            product.setTitle("Hello " + product.getTitle());
 //        }
+
+        System.out.println( responseList);
 
         return ResponseEntity.status(HttpStatus.OK).body(responseList);
     }
