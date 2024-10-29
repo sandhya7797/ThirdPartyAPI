@@ -23,34 +23,35 @@ class ThirdPartyApiApplicationTests {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
-	@Test
+	//@Transactional
+	//@Test
 	void contextLoads() {
 	}
 
-//	@Test
-//	public void test() {
-//
-//		List<Product> productList = productRepository.query1();
-//
-//		List<ProductWithIdAndTitle> list = productRepository.query2();
-//
-//		List<ProductWithIdTitleAndDescription> list2 = productRepository.query3(102L);
-//
-//		List<Product> list3 = productRepository.nativeSqlQuery();
-//
-//		List<ProductWithIdAndTitle> list4 = productRepository.nativeSql3(102L);
-//
-//		for(ProductWithIdAndTitle p : list4) {
-//
-//			System.out.println(p.getId());
-//
-//			System.out.println(p.getTitle());
-//		}
-//
-//	}
+	//@Test
+	public void test() {
 
-	@Transactional
-	@Test
+		List<Product> productList = productRepository.query1();
+
+		List<ProductWithIdAndTitle> list = productRepository.query2();
+
+		List<ProductWithIdTitleAndDescription> list2 = productRepository.query3(102L);
+
+		List<Product> list3 = productRepository.nativeSqlQuery();
+
+		List<ProductWithIdAndTitle> list4 = productRepository.nativeSql3(102L);
+
+		for(ProductWithIdAndTitle p : list4) {
+
+			System.out.println(p.getId());
+
+			System.out.println(p.getTitle());
+		}
+
+	}
+
+	//@Transactional
+	//@Test
 	public void fetchTestCases() {
 
 		System.out.println("Fetching.....");
