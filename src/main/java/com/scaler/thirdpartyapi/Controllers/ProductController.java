@@ -5,8 +5,6 @@ import com.scaler.thirdpartyapi.Commons.AuthenticationCommon;
 import com.scaler.thirdpartyapi.Exceptions.CategoryNotExistsException;
 import com.scaler.thirdpartyapi.Exceptions.ProductNotExistsException;
 import com.scaler.thirdpartyapi.Models.Product;
-import com.scaler.thirdpartyapi.DTOs.Role;
-import com.scaler.thirdpartyapi.DTOs.User;
 import com.scaler.thirdpartyapi.Services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -37,34 +35,7 @@ public class ProductController {
     //Lets assume product service received token from client and it will send token to user service for Authentication .
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
-
-//        ResponseEntity<User> tokenValidationResponse = authenticationCommon.validateToken(token);
-//
-//        if(tokenValidationResponse.getBody()==null) {
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
-//        }
-//
-//        boolean isAdmin = false;
-//        for(Role role : tokenValidationResponse.getBody().getRoles()) {
-//            if(role.getName().equals("ADMIN")) {
-//                isAdmin = true;
-//                break;
-//            }
-//        }
-//
-//        if(isAdmin) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-//        }
-
-
         List<Product> responseList =  productService.getAllProducts();
-
-//        for(Product product : responseList){
-//            product.setTitle("Hello " + product.getTitle());
-//        }
-
-//        System.out.println( responseList);
-
         return ResponseEntity.status(HttpStatus.OK).body(responseList);
     }
 
