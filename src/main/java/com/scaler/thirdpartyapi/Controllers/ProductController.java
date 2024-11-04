@@ -20,7 +20,8 @@ public class ProductController {
 
     private AuthenticationCommon authenticationCommon;
 
-    public ProductController(@Qualifier("productservice") ProductService productService, AuthenticationCommon authenticationCommon) {
+    //@Qualifier("productservice") ProductService productService,
+    public ProductController(@Qualifier("fakestoreproductservice") ProductService productService, AuthenticationCommon authenticationCommon) {
         this.productService = productService;
         this.authenticationCommon = authenticationCommon;
     }

@@ -5,6 +5,8 @@ import com.scaler.thirdpartyapi.Exceptions.ProductNotExistsException;
 import com.scaler.thirdpartyapi.Models.Category;
 import com.scaler.thirdpartyapi.Models.Product;
 import com.scaler.thirdpartyapi.Repositories.CategoryRepository;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Primary
 @Service("fakestoreproductservice")
 public class FakeStoreProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepository;
@@ -26,22 +29,39 @@ public class FakeStoreProductServiceImpl implements ProductService {
 
     private RestTemplate restTemplate;
 
-    public FakeStoreProductServiceImpl(RestTemplate restTemplate, CategoryRepository categoryRepository) {
+    private RedisTemplate redisTemplate;
+
+    public FakeStoreProductServiceImpl(RestTemplate restTemplate, CategoryRepository categoryRepository, RedisTemplate redisTemplate) {
         this.restTemplate = restTemplate;
         this.categoryRepository = categoryRepository;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
     public Product getProduct(long id) throws ProductNotExistsException {
 
-//        int a = 1/0; vl be caught by controller advice
+//       int a = 1/0; vl be caught by controller advice
+
+//       In Redis we store many objects data so passing PRODUCTS as key and product_ as prefix to get the product object.
+
+        Product p = (Product) redisTemplate.opsForHash().get("PRODUCTS","product_" + id);
+
+        if(p!=null) {
+            return p;
+        }
 
         FakeStoreResponseDTO responseDTO = restTemplate.getForObject(API_URL + "/" + id,
                 FakeStoreResponseDTO.class);
+
         if(responseDTO==null) {
             throw new ProductNotExistsException("Product with " + id + " doesn't exists!");
         }
-        return convertFakeStoreProductToProduct(responseDTO);
+
+        Product ps = convertFakeStoreProductToProduct(responseDTO);
+
+        redisTemplate.opsForHash().put("PRODUCTS","product_" + id, ps);
+
+        return ps;
     }
 
     @Override

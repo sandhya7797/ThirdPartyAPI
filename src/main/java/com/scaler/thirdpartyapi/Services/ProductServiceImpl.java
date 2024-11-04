@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@Primary
+//@Primary
 @Service("productservice")
 public class ProductServiceImpl implements ProductService {
 
