@@ -3,6 +3,8 @@ package com.scaler.thirdpartyapi.Repositories;
 import com.scaler.thirdpartyapi.Models.Product;
 import com.scaler.thirdpartyapi.Repositories.Projections.ProductWithIdAndTitle;
 import com.scaler.thirdpartyapi.Repositories.Projections.ProductWithIdTitleAndDescription;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,7 +23,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Product save(Product product);
 
     @Override
-    List<Product> findAll();
+    Page<Product> findAll(Pageable pageable);
 
     @Override
     void delete(Product entity);

@@ -7,6 +7,7 @@ import com.scaler.thirdpartyapi.Exceptions.ProductNotExistsException;
 import com.scaler.thirdpartyapi.Models.Product;
 import com.scaler.thirdpartyapi.Services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class ProductController {
     private AuthenticationCommon authenticationCommon;
 
     //@Qualifier("productservice") ProductService productService,
-    public ProductController(@Qualifier("fakestoreproductservice") ProductService productService, AuthenticationCommon authenticationCommon) {
+    public ProductController(@Qualifier("productservice") ProductService productService, AuthenticationCommon authenticationCommon) {
         this.productService = productService;
         this.authenticationCommon = authenticationCommon;
     }
@@ -35,8 +36,8 @@ public class ProductController {
 
     //Lets assume product service received token from client and it will send token to user service for Authentication .
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> responseList =  productService.getAllProducts();
+    public ResponseEntity<Page<Product>> getAllProducts(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) {
+        Page<Product> responseList =  productService.getAllProducts(pageNumber, pageSize);
         return ResponseEntity.status(HttpStatus.OK).body(responseList);
     }
 

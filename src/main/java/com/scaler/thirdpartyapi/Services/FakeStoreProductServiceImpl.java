@@ -6,6 +6,7 @@ import com.scaler.thirdpartyapi.Models.Category;
 import com.scaler.thirdpartyapi.Models.Product;
 import com.scaler.thirdpartyapi.Repositories.CategoryRepository;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Primary
+
 @Service("fakestoreproductservice")
 public class FakeStoreProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepository;
@@ -65,7 +66,7 @@ public class FakeStoreProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public Page<Product> getAllProducts(int pageNumber, int pageSize) {
         FakeStoreResponseDTO[] fakeStoreResponseDTOArray =
                 restTemplate.getForObject(API_URL, FakeStoreResponseDTO[].class);
 
@@ -77,7 +78,7 @@ public class FakeStoreProductServiceImpl implements ProductService {
             }
         }
 
-        return productList;
+        return (Page<Product>) productList;
     }
 
     @Override
