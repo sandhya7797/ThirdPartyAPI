@@ -8,6 +8,8 @@ import com.scaler.thirdpartyapi.Models.Product;
 import com.scaler.thirdpartyapi.Services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +38,9 @@ public class ProductController {
 
     //Lets assume product service received token from client and it will send token to user service for Authentication .
     @GetMapping
-    public ResponseEntity<Page<Product>> getAllProducts(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) {
-        Page<Product> responseList =  productService.getAllProducts(pageNumber, pageSize);
+    public ResponseEntity<Page<Product>> getAllProducts(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize,
+                                                        @RequestParam("sortBy") String sortBY, @RequestParam("sortOrder") String sortOrder) {
+        Page<Product> responseList =  productService.getAllProducts(pageNumber, pageSize,sortBY,sortOrder);
         return ResponseEntity.status(HttpStatus.OK).body(responseList);
     }
 

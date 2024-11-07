@@ -11,7 +11,7 @@ import java.util.List;
 public interface ProductService {
 
     public Product getProduct(long productId) throws ProductNotExistsException;
-    public Page<Product> getAllProducts(int pageNumber, int pageSize);
+    public Page<Product> getAllProducts(int pageNumber, int pageSize, String sortBy, String sortOrder);
     public Product addProduct(Product product) throws CategoryNotExistsException;
     public Product updateProduct(long productId, Product product) throws ProductNotExistsException;
     public Product replaceProduct(long productId, Product product) throws ProductNotExistsException, CategoryNotExistsException;

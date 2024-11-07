@@ -66,7 +66,7 @@ public class FakeStoreProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getAllProducts(int pageNumber, int pageSize) {
+    public Page<Product> getAllProducts(int pageNumber, int pageSize, String sortBy, String sortOrder) {
         FakeStoreResponseDTO[] fakeStoreResponseDTOArray =
                 restTemplate.getForObject(API_URL, FakeStoreResponseDTO[].class);
 

@@ -9,6 +9,7 @@ import com.scaler.thirdpartyapi.Repositories.ProductRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +42,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getAllProducts(int pageNumber, int pageSize) {
-        return productRepository.findAll(PageRequest.of(pageNumber,pageSize));
+    public Page<Product> getAllProducts(int pageNumber, int pageSize, String sortBy, String sortOrder) {
+        Sort sort = Sort.by("price").descending().and(Sort.by("title").ascending());
+        return productRepository.findAll(PageRequest.of(pageNumber,pageSize,sort));
     }
 
     @Override
